@@ -1,0 +1,30 @@
+<%-- 
+    Document   : java3-1
+    Created on : 2017/06/16, 13:22:45
+    Author     : 研人
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <%
+            int num = 2;
+            final int num2 = 2;
+            int tasu = num + num2;
+            int hiku = num - num2;
+            int kake = num * num2;
+            int waru = num / num2;
+            int jyouyo = num % num2;
+            out.print(tasu);
+            out.print(hiku);
+            out.print(kake);
+            out.print(waru);
+            out.print(jyouyo);
+        %>
+    </body>
+</html>
