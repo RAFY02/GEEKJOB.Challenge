@@ -1,0 +1,22 @@
+<%-- 
+    Document   : java4-1
+    Created on : 2017/06/16, 13:53:16
+    Author     : 研人
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <%
+        String num = "groove";
+        String num2 = "-";
+        String num3 = "gear";
+        out.print(num + num2 + num3);
+        %>
+    </body>
+</html>
