@@ -40,7 +40,9 @@ public class servlet1 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            myprofile(out);
+            for (int i =0; i<10; i++){
+                myprofile(out);
+            }
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
