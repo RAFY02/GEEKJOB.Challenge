@@ -32,11 +32,12 @@ public class Servlet3 extends HttpServlet {
     void suuji(int num, int num2, boolean num3, PrintWriter pw) {
         num *= num2;
         if(num3 == true){
-            pw.print(num);
+            num *= num;
         }
+        pw.print(num);
     }
     
-    void suuji(int num,PrintWriter pw) {
+    void suuji(int num, PrintWriter pw) {
         suuji(num,5,false, pw);
     }
     
@@ -44,7 +45,7 @@ public class Servlet3 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            suuji(2000,5,true,out);
+            suuji(10,5,true,out);
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
