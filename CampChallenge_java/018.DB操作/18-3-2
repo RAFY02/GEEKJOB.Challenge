@@ -1,0 +1,130 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.sql.*;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+/**
+ *
+ * @author 研人
+ */
+@WebServlet(urlPatterns = {"/challenge_db_profile"})
+public class challenge_db_profile extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            
+            Connection db_con = null;
+            Statement db_st = null;
+            String sql = "";
+            int db_profile = 0;
+                    
+            try{
+                //ドライバインスタンスの生成
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+                //「Challenge_db」データベースへの接続
+                db_con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Challenge_db","root","");
+                //Connection変数 db_conに createStatmentメソッドで Statment変数 stmtに Statmentで返却させる
+                db_st = db_con.createStatement();
+                //String変数 sqlにINSERT文を入力する
+                sql = ("insert into profile values(5,'山田　徹','090-1234-5678',21,'1995-12-02')");
+                //INSERT文を executeUpdateメソッドでStatment変数 db_stに読ませ、更新行数(int)を返却させる
+                //SELECT文ではないので、ResultSetメソッドと ResultSet変数は使わない(ResultSetで返却するのではなく、intで返却するから)
+                db_profile = db_st.executeUpdate(sql);
+                //表示
+                out.print(db_profile + "行更新しました。" + "<br>");
+                //close
+                db_con.close();
+                db_st.close();
+                
+            }catch(ClassNotFoundException a){
+                out.print("システムエラー" + "<br>" + a.toString());
+            }catch(SQLException b){
+                out.print("接続エラー" + "<br>" + b.toString());
+            }catch(Exception c){
+                out.print("接続エラー" + "<br>" + c.toString());
+            }finally{
+                if(db_con != null && db_st != null){
+                    try{
+                        db_con.close();
+                        db_st.close();
+                    }catch(SQLException d){
+                        System.out.println(d.getMessage());
+                    }
+                }
+            }
+            
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet challenge_db_profile</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet challenge_db_profile at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}
