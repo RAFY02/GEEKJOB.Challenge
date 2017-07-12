@@ -1,0 +1,150 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author 研人
+ */
+@WebServlet(urlPatterns = {"/challenge_db"})
+public class Challenge_db_profile3 extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, InstantiationException, InstantiationException, InstantiationException, IllegalAccessException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            
+            //テーブル"profile"の"茂"と名前につく者の表示
+            
+            Connection db_con = null;
+            PreparedStatement db_st = null;
+            ResultSet db_data = null;
+            
+            try{
+                
+            //ドライバインスタンスの生成    
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            //データベースへの接続
+            db_con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Challenge_db","root","");
+            //セレクト文
+            db_st = db_con.prepareStatement("select * from profile where name like ?");
+            //条件
+            db_st.setString(1,"%茂%");
+            //データ取得
+            db_data = db_st.executeQuery();
+            //表示
+            while(db_data.next()){
+                out.print("名前：" + db_data.getString("name") + "<br>");
+               }
+            //close
+            db_con.close();
+            db_st.close();
+            db_data.close();
+            
+            }catch(SQLException a){
+                out.print("接続エラー" + "<br>" + a.toString());
+            }catch(Exception b){
+                out.print("接続エラー" + "<br>" + b.toString()); 
+            }finally{
+                if(db_con != null && db_st != null && db_data != null){
+                    db_con.close();
+                    db_st.close();
+                    db_data.close();
+                }
+            }
+            
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet challenge_db</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet challenge_db at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Challenge_db_profile3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Challenge_db_profile3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Challenge_db_profile3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Challenge_db_profile3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Challenge_db_profile3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Challenge_db_profile3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Challenge_db_profile3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Challenge_db_profile3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}
