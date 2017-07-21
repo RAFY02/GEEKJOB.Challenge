@@ -1,0 +1,47 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Inventory_control;
+
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author 研人
+ */
+public class requestscorp implements Serializable {
+    private int productID ;
+    private String productName;
+    private int price;
+    
+    public requestscorp() {}
+    
+    public int getproductID(){
+        return productID;
+    }
+    
+    public void setproductID(int productID){
+        this.productID = productID;
+    }
+    
+    public String getproductName(){
+        return productName;
+    }
+    
+    public void setproductName(String productName){
+        this.productName = productName;
+    }
+    
+    public int getprice(){
+        return price;
+    }
+    
+    public void setprice(int price){
+        this.price = price;
+    }
+    
+    
+}
